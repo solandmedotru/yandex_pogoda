@@ -22,10 +22,16 @@ wind = doc.root.elements['fact/wind_speed'].text
 puts "Сейчас #{time.strftime("%d/%m/%Y %k:%M")}, погода в городе #{city_name}"
 puts "#{temperature} градус(ов), #{pogoda}, ветер #{wind} м/с по данным на #{observation_time}"
 
-puts 'Прогноз на'
-
 doc.root.elements.each('day') do |element|
+  puts 'Прогноз на'
   puts element.attributes['date']
-  puts "#{element.elements['day_part/temperature-data/avg'].text} градус(ов), #{element.elements['day_part/weather_type'].text}, ветер #{element.elements['day_part/wind_speed'].text} м/с"
+  puts "----------------------"
 
+  element.elements.each('day_part') do |element|
+    print element.attributes['type']
+    print ": "
+    puts "#{element.elements['temperature-data/avg'].text} градус(ов), #{element.elements['weather_type'].text}, ветер #{element.elements['wind_speed'].text} м/с"
+  end
+  puts "----------------------"
+  puts
 end
